@@ -24,4 +24,13 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ic_paradox">Paradox Icon</string>
+    <string name="topic_create_title">Topic Title</string>
+    <string name="topic_create_content">Topic Content</string>
+    <string name="topic_create_btn">CREATE NEW TOPIC</string>
+    <string name="topic_title_text">Title</string>
+    <string name="topic_owner_text">Owner</string>
+    <string name="topic_created_text">CreatedText</string>
+    <string name="topic_content_txt">Topic Content</string>
+    <string name="topic_reply_hint">Your Reply</string>
+    <string name="topic_reply_send_img">Reply Send Button</string>
 </resources>

@@ -2,7 +2,7 @@ package com.example.eu_iv_forum.Forum;
 
 import java.util.Date;
 
-public class ForumTopic {
+public class ForumTopic extends ForumTopicId{
     String title, user_id,content;
     public Date time_stamp;
 

@@ -1,6 +1,7 @@
 package com.example.eu_iv_forum.Forum;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -12,8 +13,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.eu_iv_forum.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -38,6 +41,10 @@ public class ForumSubjectFragment extends Fragment {
     private FirebaseFirestore firebaseFirestore;
     private ForumTopicAdapter forumTopicAdapter;
 
+    private FloatingActionButton btnAddTopic;
+
+    private OnTopicInteractionListener mListener;
+
     public ForumSubjectFragment() {
         // Required empty public constructor
     }
@@ -52,8 +59,20 @@ public class ForumSubjectFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_forum_subject, container, false);
         topic_list=new ArrayList<>();
         forumTopicListView=view.findViewById(R.id.topic_list_view);
+        btnAddTopic=view.findViewById(R.id.btn_add_topic);
 
-        forumTopicAdapter=new ForumTopicAdapter(topic_list);
+        btnAddTopic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent topicIntent = new Intent(getActivity(), ForumTopicCreate.class);
+                Bundle b = new Bundle();
+                b.putString("id", cate_id);
+                topicIntent.putExtras(b);
+                startActivity(topicIntent);
+            }
+        });
+
+        forumTopicAdapter=new ForumTopicAdapter(topic_list,mListener,cate_id);
         forumTopicListView.setLayoutManager(new LinearLayoutManager(container.getContext()));
         forumTopicListView.setAdapter(forumTopicAdapter);
 
@@ -66,16 +85,17 @@ public class ForumSubjectFragment extends Fragment {
         firebaseFirestore.collection("Forum/"+cate_id+"/Topics").addSnapshotListener(getActivity(),new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                Log.d("DATA COUNT", Integer.toString(queryDocumentSnapshots.size()));
-                if (!queryDocumentSnapshots.isEmpty()) {
-                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()){
-                        if (doc.getType() == DocumentChange.Type.ADDED){
-                            ForumTopic forumTopic=doc.getDocument().toObject(ForumTopic.class);
-                            topic_list.add(forumTopic);
-                            forumTopicAdapter.notifyDataSetChanged();
-                        }
+            Log.d("DATA COUNT", Integer.toString(queryDocumentSnapshots.size()));
+            if (!queryDocumentSnapshots.isEmpty()) {
+                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()){
+                    if (doc.getType() == DocumentChange.Type.ADDED){
+                        String forumTopicId=doc.getDocument().getId();
+                        ForumTopic forumTopic=doc.getDocument().toObject(ForumTopic.class).withId(forumTopicId);
+                        topic_list.add(forumTopic);
+                        forumTopicAdapter.notifyDataSetChanged();
                     }
                 }
+            }
             }
         });
 
@@ -86,24 +106,27 @@ public class ForumSubjectFragment extends Fragment {
 
 
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-
-    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if (context instanceof OnTopicInteractionListener) {
+            mListener = (OnTopicInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnNoteListInteractionListener");
+        }
 
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        mListener = null;
     }
 
 
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
+    public interface OnTopicInteractionListener {
+        void onTopicSelected(String topic,String cate);
     }
 }
