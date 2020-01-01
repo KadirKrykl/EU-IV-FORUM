@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">EU-IV-FORUM-APP</string>
+    <string name="email_hint">Your Email</string>
+    <string name="pass_hint">Your Password</string>
+    <string name="login_btn_txt">Logın to Your Account</string>
+    <string name="login_rec_btn_txt">Need a new account?</string>
+    <string name="welcome_txt">WELCOME TO</string>
+    <string name="welcome_txt2">EUROPA UNIVERSALIS FORUM</string>
+    <string name="reg_text1">Create a new Account</string>
+    <string name="regPassConf">Confirm Password</string>
+    <string name="regPass">Password</string>
+    <string name="regBtnTxt">Create new Account</string>
+    <string name="regBtnTxt2">Already have an account?</string>
+    <string name="profileImage">Profile Image</string>
+    <string name="setupName"><![CDATA[Your Name ->]]></string>
+    <string name="setupSettingsBtn">Setup account settıngs</string>
+    <string name="menu_forum_btn">Forums</string>
+    <string name="menu_stats_btn">PROVINCES</string>
+    <string name="menu_account_btn">ACCOUNT</string>
+    <string name="bottomMenu_forum">Forums</string>
+    <string name="bottomMenu_stats">Stats</string>
+    <string name="bottomMenu_account">Account</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ic_paradox">Paradox Icon</string>
+</resources>

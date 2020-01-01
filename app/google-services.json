@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "945472769073",
+    "firebase_url": "https://eu-iv-forum.firebaseio.com",
+    "project_id": "eu-iv-forum",
+    "storage_bucket": "eu-iv-forum.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945472769073:android:03cf0eadf9f9a9b68d1910",
+        "android_client_info": {
+          "package_name": "com.example.eu_iv_forum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "945472769073-k58icddik7u4u4j9j2155s6sf4qvadg6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.eu_iv_forum",
+            "certificate_hash": "9ec8c00ee714d6701a17cc380cc7a8349f40d26b"
+          }
+        },
+        {
+          "client_id": "945472769073-ulv5hatlufn6bd6bs71db2br3b5ard30.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYJZZQyXDG0tubn6ynmoJ6AOPYJ_5AEew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "945472769073-ulv5hatlufn6bd6bs71db2br3b5ard30.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
