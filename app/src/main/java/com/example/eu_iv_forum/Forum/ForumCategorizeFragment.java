@@ -54,10 +54,6 @@ public class ForumCategorizeFragment extends Fragment {
         forumCateListView.setAdapter(forumCateAdapter);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setTimestampsInSnapshotsEnabled(true)
-                .build();
-        firebaseFirestore.setFirestoreSettings(settings);
         firebaseFirestore.collection("Forum").addSnapshotListener(getActivity(),new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {

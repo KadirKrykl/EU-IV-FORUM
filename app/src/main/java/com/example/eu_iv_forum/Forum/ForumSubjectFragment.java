@@ -22,6 +22,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class ForumSubjectFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        cate_id=getArguments().get("id").toString();
+        cate_id=getArguments().get("cate_id").toString();
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_forum_subject, container, false);
         topic_list=new ArrayList<>();
@@ -66,7 +67,7 @@ public class ForumSubjectFragment extends Fragment {
             public void onClick(View v) {
                 Intent topicIntent = new Intent(getActivity(), ForumTopicCreate.class);
                 Bundle b = new Bundle();
-                b.putString("id", cate_id);
+                b.putString("cate_id", cate_id);
                 topicIntent.putExtras(b);
                 startActivity(topicIntent);
             }
@@ -77,12 +78,8 @@ public class ForumSubjectFragment extends Fragment {
         forumTopicListView.setAdapter(forumTopicAdapter);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setTimestampsInSnapshotsEnabled(true)
-                .build();
-        firebaseFirestore.setFirestoreSettings(settings);
 
-        firebaseFirestore.collection("Forum/"+cate_id+"/Topics").addSnapshotListener(getActivity(),new EventListener<QuerySnapshot>() {
+        firebaseFirestore.collection("Forum/"+cate_id+"/Topics").orderBy("time_stamp", Query.Direction.DESCENDING).addSnapshotListener(getActivity(),new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
             Log.d("DATA COUNT", Integer.toString(queryDocumentSnapshots.size()));
@@ -98,6 +95,8 @@ public class ForumSubjectFragment extends Fragment {
             }
             }
         });
+
+
 
         return view;
     }

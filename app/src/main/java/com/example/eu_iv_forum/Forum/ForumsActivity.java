@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.example.eu_iv_forum.Account.AccountActivity;
 import com.example.eu_iv_forum.Province.ProvinceActivity;
 import com.example.eu_iv_forum.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -34,15 +35,6 @@ public class ForumsActivity extends AppCompatActivity implements ForumCategorize
         forumTopicFragment = new ForumSubjectFragment();
         forumTopicSingleFragment = new ForumTopicSingleFragment();
 
-        Bundle b = getIntent().getExtras();
-        if(b != null) {
-            selectedCate = b.getString("id");
-            if (!TextUtils.isEmpty(selectedCate)){
-                onCateSelected(selectedCate);
-            }
-        }
-
-
         initializeFragment();
 
         mainbottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -57,11 +49,9 @@ public class ForumsActivity extends AppCompatActivity implements ForumCategorize
                         return true;
 
                     case R.id.bottom_action_account:
-                        /*
-                        Intent forumIntent = new Intent(ForumsActivity.this, ForumsActivity.class);
-                        startActivity(forumIntent);
+                        Intent accountIntent = new Intent(ForumsActivity.this, AccountActivity.class);
+                        startActivity(accountIntent);
                         return true;
-                         */
 
                     case R.id.bottom_action_stats:
                         Intent statsIntent = new Intent(ForumsActivity.this, ProvinceActivity.class);
@@ -80,12 +70,31 @@ public class ForumsActivity extends AppCompatActivity implements ForumCategorize
     private void initializeFragment(){
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
-        fragmentTransaction.add(R.id.forum_container, forumCategorizeFragment);
-
-        fragmentTransaction.hide(forumTopicFragment);
-        fragmentTransaction.hide(forumTopicSingleFragment);
-
+        Bundle b = getIntent().getExtras();
+        if(b != null) {
+            selectedCate = b.getString("cate_id");
+            selectedTopic = b.getString("topic_id");
+            if (!TextUtils.isEmpty(selectedCate) && !TextUtils.isEmpty(selectedTopic)){
+                forumTopicSingleFragment.setArguments(b);
+                fragmentTransaction.hide(forumCategorizeFragment);
+                fragmentTransaction.hide(forumTopicFragment);
+                fragmentTransaction.add(R.id.forum_container,forumTopicSingleFragment);
+                fragmentTransaction.show(forumTopicSingleFragment);
+            }
+            else if (!TextUtils.isEmpty(selectedCate)){
+                forumTopicFragment.setArguments(b);
+                fragmentTransaction.hide(forumCategorizeFragment);
+                fragmentTransaction.hide(forumTopicSingleFragment);
+                fragmentTransaction.add(R.id.forum_container, forumTopicFragment);
+                fragmentTransaction.show(forumTopicFragment);
+            }
+        }
+        else {
+            fragmentTransaction.add(R.id.forum_container, forumCategorizeFragment);
+            fragmentTransaction.hide(forumTopicFragment);
+            fragmentTransaction.hide(forumTopicSingleFragment);
+            fragmentTransaction.show(forumCategorizeFragment);
+        }
         fragmentTransaction.commit();
 
     }
@@ -95,7 +104,7 @@ public class ForumsActivity extends AppCompatActivity implements ForumCategorize
         selectedCate = cate;
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         Bundle args = new Bundle();
-        args.putString("id", selectedCate);
+        args.putString("cate_id", selectedCate);
         forumTopicFragment.setArguments(args);
         Log.d("SHOW", "onCateSelected: ");
         fragmentTransaction.hide(forumCategorizeFragment);

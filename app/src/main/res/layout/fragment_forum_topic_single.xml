@@ -16,13 +16,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:padding="5dp"
             android:text="@string/topic_title_text"
             android:textColor="@color/colorPrimaryFont"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_backward"
             app:layout_constraintTop_toTopOf="parent" />
 
         <FrameLayout
@@ -64,7 +63,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            app:layout_constraintBottom_toBottomOf="@+id/topic_content_txt">
+            app:layout_constraintBottom_toTopOf="@+id/topic_content_txt">
 
         </FrameLayout>
 
@@ -98,11 +97,11 @@
             android:textColorHint="@color/colorPrimaryDark"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton"
+            app:layout_constraintEnd_toStartOf="@+id/reply_button"
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/reply_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -115,17 +114,26 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/reply_list_view"
-            android:layout_width="550dp"
-            android:layout_height="862dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             android:padding="5dp"
             app:layout_constraintBottom_toTopOf="@+id/topic_reply_txt"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/topic_content_txt" />
+
+        <ImageButton
+            android:id="@+id/btn_backward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:src="@drawable/ic_backward"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.eu_iv_forum.Account.AccountActivity;
 import com.example.eu_iv_forum.Forum.ForumsActivity;
 import com.example.eu_iv_forum.Province.ProvinceActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,10 +47,8 @@ public class MainActivity extends AppCompatActivity {
         accountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                Intent accountIntent = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(regIntent);
-                */
+                Intent accountIntent = new Intent(MainActivity.this, AccountActivity.class);
+                startActivity(accountIntent);
             }
         });
 

@@ -11,6 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.eu_iv_forum.R;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -18,6 +22,7 @@ public class ForumCateAdapter extends RecyclerView.Adapter<ForumCateAdapter.View
 
     public List<ForumCategory> cate_list;
     private final ForumCategorizeFragment.OnCateListInteractionListener mListener;
+    private FirebaseFirestore firebaseFirestore;
 
 
     public ForumCateAdapter(List<ForumCategory> cate_list,ForumCategorizeFragment.OnCateListInteractionListener mListener){
@@ -40,6 +45,24 @@ public class ForumCateAdapter extends RecyclerView.Adapter<ForumCateAdapter.View
         holder.setDescText(desc_data);
         String title_data = cate_list.get(holder.getAdapterPosition()).getTitle();
         holder.setTitleText(title_data);
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseFirestore.collection("Forum/" + forumCategoryId + "/Topics").addSnapshotListener( new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+
+                if(!documentSnapshots.isEmpty()){
+
+                    int count = documentSnapshots.size();
+                    holder.updateTopicCount(count);
+
+                } else {
+
+                    holder.updateTopicCount(0);
+
+                }
+
+            }
+        });
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +84,7 @@ public class ForumCateAdapter extends RecyclerView.Adapter<ForumCateAdapter.View
         private View mView;
         private TextView descView;
         private TextView titleView;
+        private TextView topic_countView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -74,6 +98,11 @@ public class ForumCateAdapter extends RecyclerView.Adapter<ForumCateAdapter.View
         public void setTitleText(String titleText){
             titleView = mView.findViewById(R.id.cate_title);
             titleView.setText(titleText);
+        }
+
+        public void updateTopicCount(int count){
+            topic_countView = mView.findViewById(R.id.cate_count);
+            topic_countView.setText(Integer.toString(count));
         }
 
     }

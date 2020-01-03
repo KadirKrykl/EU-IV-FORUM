@@ -33,4 +33,7 @@
     <string name="topic_content_txt">Topic Content</string>
     <string name="topic_reply_hint">Your Reply</string>
     <string name="topic_reply_send_img">Reply Send Button</string>
+    <string name="logout_btn">LOG OUT</string>
+    <string name="edit_profile_btn">EDIT PROFILE</string>
+    <string name="profile_forum_title">MY TOPICS</string>
 </resources>

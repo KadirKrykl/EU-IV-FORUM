@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -87,7 +88,7 @@ public class ForumTopicCreate extends AppCompatActivity {
         //Category ID received
         Bundle b = getIntent().getExtras();
         if(b != null) {
-            cateId = b.getString("id");
+            cateId = b.getString("cate_id");
         }
 
         txt_title=findViewById(R.id.txt_title);
@@ -111,11 +112,12 @@ public class ForumTopicCreate extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<DocumentReference> task) {
                             if(task.isSuccessful()){
-
+                                String createdId = task.getResult().getId();
                                 Toast.makeText(ForumTopicCreate.this, "Post was added", Toast.LENGTH_LONG).show();
                                 Intent mainIntent = new Intent(ForumTopicCreate.this, ForumsActivity.class);
                                 Bundle b = new Bundle();
-                                b.putString("id", cateId);
+                                b.putString("cate_id", cateId);
+                                b.putString("topic_id", createdId);
                                 mainIntent.putExtras(b);
                                 startActivity(mainIntent);
                                 finish();

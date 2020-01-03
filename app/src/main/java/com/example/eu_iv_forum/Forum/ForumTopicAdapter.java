@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +17,11 @@ import com.example.eu_iv_forum.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Date;
 import java.util.List;
@@ -55,28 +60,53 @@ public class ForumTopicAdapter extends RecyclerView.Adapter<ForumTopicAdapter.Vi
         firebaseFirestore.collection("Users").document(user_id_data).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
+            if(task.isSuccessful()){
 
-                    String userName = task.getResult().getString("name");
-                    holder.setUserData(userName);
+                String userName = task.getResult().getString("name");
+                holder.setUserData(userName);
 
 
-                } else {
+            } else {
 
-                    //Firebase Exception
+                //Firebase Exception
 
-                }
+            }
             }
         });
-
-
         try {
             long millSecs = topic_list.get(holder.getAdapterPosition()).getTimestamp().getTime();
-            String dateString = DateFormat.format("MM/dd/yyyy", new Date(millSecs)).toString();
+            String dateString = DateFormat.format("MM/dd/yyyy  H:m", new Date(millSecs)).toString();
             holder.setTime(dateString);
         } catch (Exception e) {
             Toast.makeText(context, "Exception : " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+
+        firebaseFirestore.collection("Forum/" + cateId + "/Topics/" + forumTopicId + "/Reply").orderBy("time_stamp", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+
+                if(!documentSnapshots.isEmpty()){
+
+                    int count = documentSnapshots.size();
+                    ForumReply reply = documentSnapshots.getDocumentChanges().get(0).getDocument().toObject(ForumReply.class);
+                    try {
+                        long millSecs = reply.getTime_stamp().getTime();
+                        String dateString = DateFormat.format("MM/dd/yyyy  H:m", new Date(millSecs)).toString();
+                        holder.updateLastReplyTime(dateString);
+                    } catch (Exception e2) {
+                        Toast.makeText(context, "Exception : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                    holder.updateReplyCount(count);
+
+                } else {
+
+                    holder.updateReplyCount(0);
+                    holder.updateLastReplyTime("Not Exists");
+
+                }
+
+            }
+        });
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +151,16 @@ public class ForumTopicAdapter extends RecyclerView.Adapter<ForumTopicAdapter.Vi
         public void setUserData(String userData){
             userView = mView.findViewById(R.id.topic_created_whom);
             userView.setText(userData);
+        }
+
+        public void updateReplyCount(int count){
+            repliesView = mView.findViewById(R.id.topic_replies);
+            repliesView.setText(Integer.toString(count));
+        }
+
+        public void updateLastReplyTime(String lastDate){
+            lastRepliesView = mView.findViewById(R.id.topic_last_replies_time);
+            lastRepliesView.setText(lastDate);
         }
 
     }
