@@ -36,4 +36,13 @@
     <string name="logout_btn">LOG OUT</string>
     <string name="edit_profile_btn">EDIT PROFILE</string>
     <string name="profile_forum_title">MY TOPICS</string>
+    <string name="txt_pro_owner">Owner:</string>
+    <string name="txt_pro_continent">Continent:</string>
+    <string name="txt_pro_region">Region:</string>
+    <string name="txt_pro_culture">Culture:</string>
+    <string name="txt_pro_area">Area:</string>
+    <string name="txt_pro_culGroup">Culture Group:</string>
+    <string name="txt_pro_religion">Religion:</string>
+    <string name="txt_pro_tradeGood">Trade Good:</string>
+    <string name="txt_pro_tradeNode">Trade Node:</string>
 </resources>

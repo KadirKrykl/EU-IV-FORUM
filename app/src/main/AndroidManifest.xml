@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Account.AccountActivity"></activity>
+        <activity android:name=".Province.ProvinceSingleActivity"></activity>
+        <activity android:name=".Account.AccountActivity" />
         <activity android:name=".Forum.ForumTopicCreate" />
         <activity android:name=".Province.ProvinceActivity" />
         <activity android:name=".Forum.ForumsActivity" />
