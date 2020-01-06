@@ -72,6 +72,7 @@ public class SetupActivity extends AppCompatActivity {
         user_id = firebaseAuth.getCurrentUser().getUid();
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         setupImage = findViewById(R.id.setupImage);
         setupName = findViewById(R.id.setupName);
