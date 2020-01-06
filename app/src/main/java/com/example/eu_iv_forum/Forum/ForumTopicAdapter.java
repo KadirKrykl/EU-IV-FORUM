@@ -94,7 +94,8 @@ public class ForumTopicAdapter extends RecyclerView.Adapter<ForumTopicAdapter.Vi
                         String dateString = DateFormat.format("MM/dd/yyyy  H:m", new Date(millSecs)).toString();
                         holder.updateLastReplyTime(dateString);
                     } catch (Exception e2) {
-                        Toast.makeText(context, "Exception : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "Exception : " + e2.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e("Error ", e2.getMessage() );
                     }
                     holder.updateReplyCount(count);
 

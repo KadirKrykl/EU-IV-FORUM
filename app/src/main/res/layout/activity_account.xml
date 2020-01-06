@@ -44,7 +44,7 @@
         android:textColorHint="@color/colorPrimaryFont"
         android:textColorLink="@color/colorPrimaryFont"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/mainBottomNav"
         app:layout_constraintEnd_toStartOf="@+id/profile_edit_btn"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -62,8 +62,21 @@
         android:textColorHint="@color/colorPrimaryFont"
         android:textColorLink="@color/colorPrimaryFont"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/mainBottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/profile_logout_btn"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/mainBottomNav"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scrollbarSize="10dp"
+        app:itemIconSize="26dp"
+        app:itemIconTint="@color/colorPrimaryFont"
+        app:itemTextColor="@color/colorPrimaryFont"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

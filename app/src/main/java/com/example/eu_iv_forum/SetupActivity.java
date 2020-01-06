@@ -72,11 +72,6 @@ public class SetupActivity extends AppCompatActivity {
         user_id = firebaseAuth.getCurrentUser().getUid();
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setTimestampsInSnapshotsEnabled(true)
-                .build();
-        firebaseFirestore.setFirestoreSettings(settings);
-        storageReference = FirebaseStorage.getInstance().getReference();
 
         setupImage = findViewById(R.id.setupImage);
         setupName = findViewById(R.id.setupName);

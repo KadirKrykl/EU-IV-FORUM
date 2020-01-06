@@ -89,6 +89,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:background="@color/colorPrimary"
             android:ems="10"
             android:hint="@string/topic_reply_hint"
             android:inputType="textMultiLine"
